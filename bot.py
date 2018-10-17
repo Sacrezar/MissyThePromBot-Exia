@@ -15,9 +15,7 @@ with open('config.json') as f:
 bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))
 owner = config.get('owners')
 
-listG1 = []
-listG2 = []
-listG3 = []
+
 
 @bot.event
 async def on_ready(): 
@@ -33,29 +31,29 @@ async def date(ctx):
 #Group Rotation (Tuesday & Wednesday)
 @bot.command(pass_context=True)
 async def roll(ctx):
+    listG1 = []
+    listG2 = []
+    listG3 = []
     channel = ctx.message.channel
 
     if(ctx.message.author.id == owner):
         #Groups recovery
-        try:
-            for member in bot.get_all_members():
-                print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[1]))
-                if(str(member.roles[1]) == "G1"):
-                    listG1.append(member.display_name)
+        for member in bot.get_all_members():
+            print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[1]))
+            if(str(member.roles[1]) == "G1"):
+                listG1.append(member.display_name)
              
-                if(str(member.roles[1]) == "G2"):
-                    listG2.append(member.display_name)
+            if(str(member.roles[1]) == "G2"):
+                listG2.append(member.display_name)
 
-                if(str(member.roles[1]) == "G3"):
-                    listG3.append(member.display_name)
-        except IndexError:
-            print("Un ou plusieurs membres n'ont pas de rôles")
+            if(str(member.roles[1]) == "G3"):
+                listG3.append(member.display_name)
 
         print(listG1) 
         print(listG2)
         print(listG3)
 
-        #Calling assignation function
+#         #Calling assignation function
         assigner = Assignation_roles_random(0, 1, len(listG1)-1)
 #        logger.info("G1 : {}".format(assigner))
         tirLeader1 = listG1[assigner['leader']]
@@ -83,7 +81,7 @@ async def roll(ctx):
         await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n```fix\n{0}\n```".format(day))
         await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629943918985237>:```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'\n```".format(tirLeader1, tirSecret1, tirScrib1, tirTkeeper1))
         await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629942371287043>:```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'\n```".format(tirLeader2, tirSecret2, tirScrib2, tirTkeeper2))
-        # await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629949572907028>:\n ```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'```\n".format(tirLeader3, tirSecret3, tirScrib3, tirTkeeper3))
+#         # await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629949572907028>:\n ```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'```\n".format(tirLeader3, tirSecret3, tirScrib3, tirTkeeper3))
     else:
         messages = []
         await bot.send_message(channel,"`\nYou're not allowed to\n`")
@@ -101,8 +99,9 @@ async def clear(ctx, amount=100):
         messages = []
         async for message in bot.logs_from(channel, limit=int(amount)):
             messages.append(message)
+        numberOfMessages = len(messages)
         await bot.delete_messages(messages)
-        await bot.send_message(channel,'`Messages deleted`')
+        await bot.send_message(channel,'` {} messages deleted`'.format(numberOfMessages))
         
         async for message in bot.logs_from(channel, 1):
             messages.append(message)
