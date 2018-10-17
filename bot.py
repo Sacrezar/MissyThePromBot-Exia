@@ -99,7 +99,7 @@ async def clear(ctx, amount=100):
         messages = []
         async for message in bot.logs_from(channel, limit=int(amount)):
             messages.append(message)
-        numberOfMessages = len(messages)
+        numberOfMessages = len(messages)-1
         await bot.delete_messages(messages)
         await bot.send_message(channel,'` {} messages deleted`'.format(numberOfMessages))
         
