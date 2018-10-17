@@ -5,29 +5,29 @@ from logging.handlers import RotatingFileHandler
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# création de l'objet logger qui va nous servir à écrire dans les logs
+# Creation of the logger object that will be used to write in the logs
 logger = logging.getLogger()
-# on met le niveau du logger à DEBUG, comme ça il écrit tout
+# Logger level at DEBUG, so he writes everything down
 logger.setLevel(logging.INFO)
  
-# création d'un formateur qui va ajouter le temps, le niveau
-# de chaque message quand on écrira un message dans le log
+# creation of a formator  who will add time, level
+# of each message when writing a message in the log
 formatter = logging.Formatter('%(asctime)s :: %(levelname)s :: %(message)s')
-# création d'un handler qui va rediriger une écriture du log vers
-# un fichier en mode 'append', avec 1 backup et une taille max de 10Mo
+# creation of a handler that will redirect a writing from the log to
+# a file in'append' mode, with 1 backup and a maximum size of 10MB
 file_handler = RotatingFileHandler('activity.log', 'a', 1000000, 10)
-# on lui met le niveau sur DEBUG, on lui dit qu'il doit utiliser le formateur
-# créé précédement et on ajoute ce handler au logger
+# we set his level on DEBUG, we tell him he has to use the formator.
+# created previously and add this handler to the logger
 file_handler.setLevel(logging.DEBUG)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
  
-# création d'un second handler qui va rediriger chaque écriture de log sur la console
+# creation of a second handler that will redirect each log writing to the console
 stream_handler = logging.StreamHandler()
 stream_handler.setLevel(logging.DEBUG)
 logger.addHandler(stream_handler)
 
-#Role disponible [GLOBAL][INFO]
+#available roles [GLOBAL][INFO]
 role = ['leader', 'scribe', 'secretaire', 'gestionnaire']
 logger.info("Roles disponibles : {}".format(role))
 
@@ -48,11 +48,11 @@ def Assignation_roles_random(choix, groupNumberGlobal, nbPersonnes, tempRole=rol
         tempRole = ['leader', 'scribe', 'secretaire', 'gestionnaire']
     logger.debug(tempRole)
 
-    #Recuperation des données -> Liste
+    #Data Recovering -> List
     myDict = {}
     with open(filePath, "r+") as f:
       for line in f:
-            #Variable de check
+            #Check var
             temp = re.split(',|\n|:', line)
 
             #Iniatialise le format des données
@@ -64,21 +64,21 @@ def Assignation_roles_random(choix, groupNumberGlobal, nbPersonnes, tempRole=rol
                 else:
                     temp[i] = int(temp[i])
             
-            #Verifie si la variable myDict a besoin d'une inialisation
+            #Checks if the myDict variable needs inialization
             try:
                 myDict[temp[0]]
             except:
                 myDict[temp[0]] = {}
 
-            #Ajoutes les valeurs au dictionnaire
+            #Adding values to the dictionnary
             myDict[temp[0]][temp[1]] = temp[2:]
 
-            #Check les valeurs [DEBUG]
+            #Check values [DEBUG]
             logger.debug("Numero deja passer dans les roles suivant : {}".format(myDict))
-    #Ferme le fichier
+    #Close the file
     f.closed
 
-    #Initialise myDict si alreadyPick.txt est vide
+    #Initialize myDict if alreadyPick.txt is empty
     if(myDict == {}):
         for iGroup in range(1,3):
             myDict[iGroup] = {}
@@ -97,7 +97,7 @@ def Assignation_roles_random(choix, groupNumberGlobal, nbPersonnes, tempRole=rol
 
     return randValue
 
-#Retourne un élément de la liste
+#Returns an item from the list
 def getTirage(mylist, seedValue, maxUser, role):
     #Variable local
     random.seed(seedValue)
@@ -105,13 +105,13 @@ def getTirage(mylist, seedValue, maxUser, role):
     randReturn = {}
     logger.debug("RandValue : {}".format(randValue))
 
-    #Fais un tirage sur tout les roles
+    #Draw on all the roles
     for i in role:
-        #Verifie si il y a une valeur a recuperer
+        #Checks if there is a value to recover
         try:
-            #Si une valeur a etait deja prise, en rand une autre
+            #If one value has already been taken, take another value
             while(randValue in mylist[i] or randValue in randReturn.values()):
-                #Creer une boucle infini si randValue == 0, on ajoute donc 1 dans ce genre de cas
+                #Infinite loop in order too change randValue
                 if(randValue == 0):
                     seedValue += randValue+1
                 else:
@@ -121,31 +121,31 @@ def getTirage(mylist, seedValue, maxUser, role):
                 randValue = random.randint(0, maxUser)
                 logger.debug("{} IDTemporaire : {}".format(i, randValue))
             
-        #Sinon prend une valeur au hasard différente des autres
+        #Take a different value
         except:
             #logger.info("Mylist[{}] doesn't exist, random value : ".format(i))
             while(randValue in randReturn.values()):
-                #Creer une boucle infini si randValue == 0, on ajoute donc 1 dans ce genre de cas
+                # Infinite loop in order too change randValue
                 if(randValue == 0):
                     seedValue += randValue+1
                 else:
                     seedValue += randValue
-                #Lance un nouveau random
+                #new random
                 random.seed(seedValue)
                 randValue = random.randint(0, maxUser)
                 logger.debug("{} IDTemporaire : {}".format(i, randValue))
     
-        #Ajoute la valeur dans un dictionnaire
+        #adding value in a dict
         randReturn[i] = randValue
-        #Donne l'information sur l'ID à itération de la boucle
+        #Giving information about ID 
         logger.debug("{} ID : {}".format(i, randReturn))
 
     #Renvoie les valeurs recuperer
     logger.debug("Numero recuperer avant le return getTirage() : {}".format(randReturn))
     return randReturn
 
-#Retourne le nom des personnes selectionné
-    #Mettre à jour les paramètres de la fonction
+#Returns the names of the selected people
+    #Update the function parameters
     #getName(randValue, myDict)
 def getName(randValue, mylist, i):
     try:
@@ -153,7 +153,7 @@ def getName(randValue, mylist, i):
     except:
         return -1
 
-#Recréer le fichier alreadyPick
+#Recreate alreadyPick file
 def finalization(alreadyPick, randomList, arrayRange, groupNumber):
     stemp = ""
     stempIn = ""

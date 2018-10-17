@@ -4,13 +4,13 @@ import discord
 import time
 import json
 from assignation import Assignation_roles_random
+from functions import getDateInList
 from discord.ext import commands
 # from functions import getDay
 
 
 with open('config.json') as f:
     config = json.load(f)
-    print(config.get('owners'))
 
 bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))
 owner = config.get('owners')
@@ -25,13 +25,18 @@ async def on_ready():
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
     await bot.change_presence(game=discord.Game(name=config.get('playing')))    
 
-#Roulement de groupes
+@bot.command(pass_context=True)
+async def date(ctx):
+    date = " ".join(getDateInList())
+    await bot.send_message(ctx.message.channel, "```xl\n'{}'\n```".format(date))
+
+#Group Rotation (Tuesday & Wednesday)
 @bot.command(pass_context=True)
 async def roll(ctx):
     channel = ctx.message.channel
 
     if(ctx.message.author.id == owner):
-        #Récupération des groupes
+        #Groups recovery
         try:
             for member in bot.get_all_members():
                 print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[1]))
@@ -45,11 +50,12 @@ async def roll(ctx):
                     listG3.append(member.display_name)
         except IndexError:
             print("Un ou plusieurs membres n'ont pas de rôles")
-        # Vérif
+
         print(listG1) 
         print(listG2)
         print(listG3)
 
+        #Calling assignation function
         assigner = Assignation_roles_random(0, 1, len(listG1)-1)
 #        logger.info("G1 : {}".format(assigner))
         tirLeader1 = listG1[assigner['leader']]
@@ -57,20 +63,22 @@ async def roll(ctx):
         tirScrib1 = listG1[assigner['scribe']]
         tirTkeeper1 = listG1[assigner['gestionnaire']]
         
+        #Calling assignation function
         assigner = Assignation_roles_random(0, 2, len(listG2)-1)
 #        logger.info("G2 : {}".format(assigner))
         tirLeader2 = listG2[assigner['leader']]
         tirSecret2 = listG2[assigner['secretaire']]
         tirScrib2 = listG2[assigner['scribe']]
         tirTkeeper2 = listG2[assigner['gestionnaire']]       
-              
+
+        #Calling assignation function
 #         assigner = Assignation_roles_random(0, 3, len(listG3)-1)
 # #        logger.info("G3 : {}".format(assigner))
 #         tirLeader3 = listG3[assigner['leader']]
 #         tirSecret3 = listG3[assigner['secretaire']]
 #         tirScrib3 = listG3[assigner['scribe']]
 #         tirTkeeper3 = listG3[assigner['gestionnaire']]
-        day = "Mardi 30 Octobre 2018"
+        day = "" 
 
         await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n```fix\n{0}\n```".format(day))
         await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629943918985237>:```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'\n```".format(tirLeader1, tirSecret1, tirScrib1, tirTkeeper1))
