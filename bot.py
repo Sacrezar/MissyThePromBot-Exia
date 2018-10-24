@@ -7,7 +7,7 @@ from assignation import Assignation_roles_random
 from functions import getDateInList
 from discord.ext import commands
 # from functions import getDay
-
+#test
 
 with open('config.json') as f:
     config = json.load(f)
