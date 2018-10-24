@@ -23,6 +23,7 @@ async def on_ready():
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
     await bot.change_presence(game=discord.Game(name=config.get('playing')))    
 
+#give the date
 @bot.command(pass_context=True)
 async def date(ctx):
     date = " ".join(getDateInList())
@@ -97,7 +98,7 @@ async def clear(ctx, amount=100):
     if(ctx.message.author.id == owner):
         channel = ctx.message.channel
         messages = []
-        async for message in bot.logs_from(channel, limit=int(amount)):
+        async for message in bot.logs_from(channel, limit=int(amount+1)):
             messages.append(message)
         numberOfMessages = len(messages)-1
         await bot.delete_messages(messages)

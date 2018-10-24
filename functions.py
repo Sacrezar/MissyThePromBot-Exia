@@ -3,16 +3,16 @@ import discord
 import datetime
 
 def getDateInList():
-    dayList = [
+    dayList = (
         'Lundi', #Monday
         'Mardi', #Tuesday
         'Mercredi', #Wednesday
         'Jeudi',  #Thursday
         'Vendredi', #Friday
         'Samedi', #Saturday
-        'Dimanche'] #Sunday
+        'Dimanche') #Sunday
 
-    monthList = [
+    monthList = (
         'janvier', #january
         'février', #february
         'mars', #march
@@ -24,7 +24,7 @@ def getDateInList():
         'septembre', #septembre
         'octobre', #octobre
         'novembre', #november
-        'décembre'] #december
+        'décembre') #december
 
     dayName = dayList[datetime.datetime.today().weekday()]
     dayInMonth = datetime.datetime.today().day
