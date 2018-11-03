@@ -63,7 +63,7 @@ class Admin:
     #         tirSecret3 = listG3[assigner['secretaire']]
     #         tirScrib3 = listG3[assigner['scribe']]
     #         tirTkeeper3 = listG3[assigner['gestionnaire']]
-            day = "" 
+            day = " ".join(date.getDateInList())
 
             await self.bot.send_message(discord.Object(id='499515804589490178'),"⠀\n```fix\n{0}\n```".format(day))
             await self.bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629943918985237>:```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'\n```".format(tirLeader1, tirSecret1, tirScrib1, tirTkeeper1))
