@@ -3,15 +3,17 @@ import discord
 import json
 
 from discord.ext import commands
-from funs import assignation
+from funs import assignation, date
 
 with open('config.json') as f:
     config = json.load(f)
 owner = config.get('owners')
 
+
 class Admin:
     def __init__(self, bot):
         self.bot = bot
+
 
     #Group Rotation (Tuesday & Wednesday)
     @commands.command(pass_context=True)
@@ -96,6 +98,17 @@ class Admin:
                 messages.append(message)
             await self.bot.delete_messages(messages)
 
+
+    # @commands.command(pass_context=True)
+    # async def rollauto(self, ctx):
+    #     if(ctx.message.author.id == owner):
+    #         channel = ctx.message.channel
+    #         cb = date.P.get_cb() ^ True
+    #         date.set_cb(cb)
+    #         if cb:
+    #             await self.bot.send_message(channel,'Roulement automatique activé')
+    #         if not cb:
+    #             await self.bot.send_message(channel,'Roulement automatique désactivé')
 
 def setup(bot):
     bot.add_cog(Admin(bot))

@@ -2,7 +2,7 @@ from discord.ext import commands
 import discord
 import datetime
 
-def getDateInList():
+def getDateInList(extradays=0):
     dayList = (
         'Lundi', #Monday
         'Mardi', #Tuesday
@@ -26,7 +26,7 @@ def getDateInList():
         'novembre', #november
         'décembre') #december
 
-    dayName = dayList[datetime.datetime.today().weekday()]
+    dayName = dayList[datetime.datetime.today().weekday()+extradays]
     dayInMonth = datetime.datetime.today().day
     month = monthList[datetime.datetime.today().month-1]
     year = datetime.datetime.today().year
