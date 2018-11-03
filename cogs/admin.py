@@ -13,10 +13,6 @@ class Admin:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ping(self):
-        await self.bot.say('Pong!')
-
     #Group Rotation (Tuesday & Wednesday)
     @commands.command(pass_context=True)
     async def roll(self, ctx):
