@@ -1,5 +1,8 @@
-config.json
 /__pycache__
-/.vscode
-/temp
 /cogs/__pycache__
+/funs/__pycache__
+/.vscode
+
+
+/temp
+config.json
