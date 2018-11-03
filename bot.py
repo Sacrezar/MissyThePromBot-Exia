@@ -5,15 +5,18 @@ import json
 import discord
 from discord.ext import commands
 
+#Opening json file 
 with open('config.json') as f:
     config = json.load(f)
 
+#Bot setup
 bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))
 bot.remove_command('help')
 owner = config.get('owners')
 
+
 exts = []
-cfile = []
+#reading file and adding them to exts if they end by ".py"
 print("cogs is filled with : ", end="")
 for file in os.listdir("cogs"):
     if file.endswith(".py"):
@@ -54,12 +57,13 @@ async def unload(ctx, exts):
     else:
         print('{} tried to use {}'.format(ctx.message.author, inspect.stack()[0][3]))
 
-
+#loading extension when online
 if __name__ == '__main__':
     for extension in exts:
         try:
             bot.load_extension(extension)
         except Exception as e:
             print('{} cannot be loaded. [{}]'.format(extension, e))
-    
+
+#connect the bot
 bot.run(config.get('token'))
