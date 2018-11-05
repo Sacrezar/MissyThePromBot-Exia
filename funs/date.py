@@ -37,3 +37,6 @@ def getDateInList(extradays=0):
     # print(" ".join(dateString))   
 
     return dateString
+
+def WhatHourIsIt():
+    return datetime.datetime.now().time()

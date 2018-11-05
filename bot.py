@@ -1,6 +1,7 @@
 import os
 import inspect
 
+from funs import date
 import json
 import discord
 from discord.ext import commands
@@ -32,6 +33,7 @@ async def on_ready():
     print("\n")
     print("[*] I'm in, {}".format(config.get('join_message')))
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
+    print('Launched at {} on {}'.format(date.WhatHourIsIt()," ".join(date.getDateInList())))
     await bot.change_presence(game=discord.Game(name=config.get('playing')))    
 
 #Load & Unlod commands
