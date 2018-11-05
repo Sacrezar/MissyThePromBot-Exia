@@ -12,7 +12,7 @@ class Event():
     #Group Rotation (Tuesday & Wednesday)
     async def autoroll(self):
         await self.bot.wait_until_ready()
-        print("Demain, nous somme le {}".format(date.getDateInList(1)[0]))
+        print("Demain, nous sommes le {}".format(date.getDateInList(1)[0]))
         while True:
             if (date.getDateInList(1)[0] == 'Lundi' or date.getDateInList(1)[0] == 'Mercredi'):
                 listG1 = []
@@ -64,7 +64,7 @@ class Event():
                 await self.bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629942371287043>:```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'\n```".format(tirLeader2, tirSecret2, tirScrib2, tirTkeeper2))
         #         # await bot.send_message(discord.Object(id='499515804589490178'),"⠀\n<@&374629949572907028>:\n ```prolog\nAnimateur    : '{0}' \nSecretaire   : '{1}' \nScribe       : '{2}' \nGestionnaire : '{3}'```\n".format(tirLeader3, tirSecret3, tirScrib3, tirTkeeper3)) # task runs every 60 seconds
 
-            await asyncio.sleep(86000)
+            await asyncio.sleep(86400)
 
 def setup(bot):
     bot.add_cog(Event(bot))

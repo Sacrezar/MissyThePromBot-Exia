@@ -6,11 +6,12 @@ class Normies:
     def __init__(self, bot):
         self.bot = bot
 
+    # PING PONG
     @commands.command()
     async def ping(self):
         await self.bot.say('Pong!')
 
-        #give the date
+    #give the date
     @commands.command(pass_context=True)
     async def date(self, ctx):
         date = " ".join(d.getDateInList())

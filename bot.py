@@ -24,7 +24,7 @@ for file in os.listdir("cogs"):
         l = list('cogs.{}'.format(file))[0:-3]
         cfiles = "".join(l)
         exts.append(cfiles)
-print(end="")
+print()
 
 #Online event
 @bot.event
