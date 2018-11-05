@@ -12,7 +12,7 @@ class Event():
     #Group Rotation (Tuesday & Wednesday)
     async def autoroll(self):
         await self.bot.wait_until_ready()
-        print("Demain, nous sommes le {}".format(date.getDateInList(1)[0]))
+        print("Tomorrow is {}".format(date.getDateInList(1)[0]))
         while True:
             if (date.getDateInList(1)[0] == 'Lundi' or date.getDateInList(1)[0] == 'Mercredi'):
                 listG1 = []
