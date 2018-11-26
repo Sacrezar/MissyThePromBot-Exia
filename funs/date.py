@@ -25,11 +25,11 @@ def getDateInList(extradays=0):
         'octobre', #octobre
         'novembre', #november
         'décembre') #december
-    
+        
+    dayInMonth = datetime.datetime.today().day+extradays
     if datetime.datetime.today().weekday()+extradays > 6:
         extradays=-6
     dayName = dayList[datetime.datetime.today().weekday()+extradays]
-    dayInMonth = datetime.datetime.today().day
     month = monthList[datetime.datetime.today().month-1]
     year = datetime.datetime.today().year
 
