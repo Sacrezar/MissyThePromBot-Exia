@@ -114,17 +114,35 @@ class Admin:
                 messages.append(message)
             await self.bot.delete_messages(messages)
 
+    @commands.command(pass_context = True)
+    async def s(self, ctx):
+        if(ctx.message.author.id == owner or ctx.message.author.id == '124598335230312448' or ctx.message.author.id == '360765827294953472'):
+            message = ctx.message.content
+            try:
+                temp = message.split(' ', 2)
+                toTry = temp[1]
+            except Exception:
+                toTry = 0
 
-    # @commands.command(pass_context=True)
-    # async def rollauto(self, ctx):
-    #     if(ctx.message.author.id == owner):
-    #         channel = ctx.message.channel
-    #         cb = date.P.get_cb() ^ True
-    #         date.set_cb(cb)
-    #         if cb:
-    #             await self.bot.send_message(channel,'Roulement automatique activé')
-    #         if not cb:
-    #             await self.bot.send_message(channel,'Roulement automatique désactivé')
+            if(toTry == "-a"):
+                id = '375268017011163157'
+                await self.bot.send_message(discord.Object(id=id), temp[2])
+            elif(toTry == '-g'):
+                id = '499165605790875658'
+                await self.bot.send_message(discord.Object(id=id), temp[2])
+                id = '499165797038555146'
+                await self.bot.send_message(discord.Object(id=id), temp[2])
+            elif(toTry == '-g1'):
+                id = '499165605790875658'
+                await self.bot.send_message(discord.Object(id=id), temp[2])
+            elif(toTry == '-g2'):
+                id = '499165797038555146'
+                await self.bot.send_message(discord.Object(id=id), temp[2])
+            else:
+                await self.bot.send_message(ctx.message.channel, "```fix\n-a  : annonce\n-g  : groupes\n-g1 : groupe 1\n-g2 : groupe 2\n```")
+                
+            
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
