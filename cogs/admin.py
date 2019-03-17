@@ -21,20 +21,36 @@ class Admin:
         listG1 = []
         listG2 = []
         listG3 = []
+        listG1A = []
+        listG2A = []
+        listG3A = []
         channel = ctx.message.channel
 
         if(ctx.message.author.id == owner):
             #Groups recovery
-            for member in self.bot.get_all_members():
-                print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[1]))
-                if(str(member.roles[1]) == "G1"):
-                    listG1.append(member.display_name)
-                
-                if(str(member.roles[1]) == "G2"):
-                    listG2.append(member.display_name)
+            for member in self.bot.get_all_members(): 
+                try:
+                    print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[2]) + " & " + str(member.roles[1]))
 
-                if(str(member.roles[1]) == "G3"):
-                    listG3.append(member.display_name)
+                    if(str(member.roles[2]) == "G1"):
+                        listG1.append(member.display_name)
+                        
+                    if(str(member.roles[2]) == "G2"):
+                        listG2.append(member.display_name)
+
+                    if(str(member.roles[2]) == "G3"):
+                        listG3.append(member.display_name)
+
+                    if(str(member.roles[1]) == "G1A"):
+                        listG1A.append(member.display_name)
+                        
+                    if(str(member.roles[1]) == "G2A"):
+                        listG2A.append(member.display_name)
+
+                    if(str(member.roles[1]) == "G3A"):
+                        listG3A.append(member.display_name)
+                except Exception as e:
+                    print("{} : [{}]".format(member.display_name,e))
 
             print(listG1) 
             print(listG2)

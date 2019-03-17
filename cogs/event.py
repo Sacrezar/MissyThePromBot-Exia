@@ -24,7 +24,7 @@ class Event():
                 #Groups recovery
                 for member in self.bot.get_all_members(): 
                     try:
-                        print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[2]) + " & " + str(member.roles[2]))
+                        print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[2]) + " & " + str(member.roles[1]))
 
                         if(str(member.roles[2]) == "G1"):
                             listG1.append(member.display_name)
@@ -44,7 +44,7 @@ class Event():
                         if(str(member.roles[1]) == "G3A"):
                             listG3A.append(member.display_name)
                     except Exception as e:
-                        print("member.display_name : [{}]".format(e))
+                        print("{} : [{}]".format(member.display_name,e))
 
                 print(listG1) 
                 print(listG2)
