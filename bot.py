@@ -6,9 +6,11 @@ import json
 import discord
 from discord.ext import commands
 
-#Opening json file 
-with open('config.json') as f:
-    config = json.load(f)
+#Opening env file 
+with open('.env.json') as f:
+    env = json.load(f)
+with open(env.get('config')) as e:
+    config = json.load(e)
 
 #Bot setup
 bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))

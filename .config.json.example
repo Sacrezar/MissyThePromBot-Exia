@@ -1,0 +1,9 @@
+{
+    "token": "TOKEN",
+    "owners": "ID", 
+    "desc":"DESCRIPTION",
+    "prefix": [
+      "!"
+    ],
+    "playing": ""
+}

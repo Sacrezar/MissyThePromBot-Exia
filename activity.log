@@ -1,0 +1,16 @@
+2019-03-18 11:55:35,260 :: INFO :: Roles disponibles : ['leader', 'scribe', 'secretaire', 'gestionnaire']
+2019-03-18 11:55:35,284 :: INFO :: logging in using static token
+2019-03-18 11:55:36,417 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2019-03-18 11:55:36,419 :: INFO :: sent the identify payload to create the websocket
+2019-03-18 11:58:16,455 :: INFO :: Roles disponibles : ['leader', 'scribe', 'secretaire', 'gestionnaire']
+2019-03-18 11:58:16,458 :: INFO :: logging in using static token
+2019-03-18 11:58:17,654 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2019-03-18 11:58:17,661 :: INFO :: sent the identify payload to create the websocket
+2019-03-18 12:17:02,442 :: INFO :: Roles disponibles : ['leader', 'scribe', 'secretaire', 'gestionnaire']
+2019-03-18 12:17:02,447 :: INFO :: logging in using static token
+2019-03-18 12:17:05,785 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2019-03-18 12:17:05,786 :: INFO :: sent the identify payload to create the websocket
+2019-03-18 12:26:59,947 :: INFO :: Roles disponibles : ['leader', 'scribe', 'secretaire', 'gestionnaire']
+2019-03-18 12:26:59,948 :: INFO :: logging in using static token
+2019-03-18 12:27:02,960 :: INFO :: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2019-03-18 12:27:02,962 :: INFO :: sent the identify payload to create the websocket

@@ -5,14 +5,14 @@ import json
 from discord.ext import commands
 from funs import assignation, date
 
-with open('config.json') as f:
-    config = json.load(f)
-owner = config.get('owners')
-
-
 class Admin:
     def __init__(self, bot):
         self.bot = bot
+        with open('.env.json') as f:
+            env = json.load(f)
+        with open(env.get('config')) as e:
+            config = json.load(e)
+        self.owner = config.get('owners')
 
 
     #Group Rotation (Tuesday & Wednesday)
@@ -21,36 +21,20 @@ class Admin:
         listG1 = []
         listG2 = []
         listG3 = []
-        listG1A = []
-        listG2A = []
-        listG3A = []
         channel = ctx.message.channel
 
-        if(ctx.message.author.id == owner):
+        if(ctx.message.author.id == self.owner):
             #Groups recovery
-            for member in self.bot.get_all_members(): 
-                try:
-                    print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[2]) + " & " + str(member.roles[1]))
+            for member in self.bot.get_all_members():
+                print("This is: " + member.display_name + " " + member.id + " " + str(member.roles[1]))
+                if(str(member.roles[1]) == "G1"):
+                    listG1.append(member.display_name)
+                
+                if(str(member.roles[1]) == "G2"):
+                    listG2.append(member.display_name)
 
-                    if(str(member.roles[2]) == "G1"):
-                        listG1.append(member.display_name)
-                        
-                    if(str(member.roles[2]) == "G2"):
-                        listG2.append(member.display_name)
-
-                    if(str(member.roles[2]) == "G3"):
-                        listG3.append(member.display_name)
-
-                    if(str(member.roles[1]) == "G1A"):
-                        listG1A.append(member.display_name)
-                        
-                    if(str(member.roles[1]) == "G2A"):
-                        listG2A.append(member.display_name)
-
-                    if(str(member.roles[1]) == "G3A"):
-                        listG3A.append(member.display_name)
-                except Exception as e:
-                    print("{} : [{}]".format(member.display_name,e))
+                if(str(member.roles[1]) == "G3"):
+                    listG3.append(member.display_name)
 
             print(listG1) 
             print(listG2)
@@ -96,7 +80,7 @@ class Admin:
     #Clear function
     @commands.command(pass_context = True)
     async def clear(self, ctx, amount=99):
-        if(ctx.message.author.id == owner):
+        if(ctx.message.author.id == self.owner):
             channel = ctx.message.channel
             messages = []
             async for message in self.bot.logs_from(channel, limit=int(amount+1)):
@@ -114,35 +98,17 @@ class Admin:
                 messages.append(message)
             await self.bot.delete_messages(messages)
 
-    @commands.command(pass_context = True)
-    async def s(self, ctx):
-        if(ctx.message.author.id == owner or ctx.message.author.id == '124598335230312448' or ctx.message.author.id == '360765827294953472'):
-            message = ctx.message.content
-            try:
-                temp = message.split(' ', 2)
-                toTry = temp[1]
-            except Exception:
-                toTry = 0
 
-            if(toTry == "-a"):
-                id = '375268017011163157'
-                await self.bot.send_message(discord.Object(id=id), temp[2])
-            elif(toTry == '-g'):
-                id = '499165605790875658'
-                await self.bot.send_message(discord.Object(id=id), temp[2])
-                id = '499165797038555146'
-                await self.bot.send_message(discord.Object(id=id), temp[2])
-            elif(toTry == '-g1'):
-                id = '499165605790875658'
-                await self.bot.send_message(discord.Object(id=id), temp[2])
-            elif(toTry == '-g2'):
-                id = '499165797038555146'
-                await self.bot.send_message(discord.Object(id=id), temp[2])
-            else:
-                await self.bot.send_message(ctx.message.channel, "```fix\n-a  : annonce\n-g  : groupes\n-g1 : groupe 1\n-g2 : groupe 2\n```")
-                
-            
-
+    # @commands.command(pass_context=True)
+    # async def rollauto(self, ctx):
+    #     if(ctx.message.author.id == owner):
+    #         channel = ctx.message.channel
+    #         cb = date.P.get_cb() ^ True
+    #         date.set_cb(cb)
+    #         if cb:
+    #             await self.bot.send_message(channel,'Roulement automatique activé')
+    #         if not cb:
+    #             await self.bot.send_message(channel,'Roulement automatique désactivé')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
