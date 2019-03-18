@@ -2,12 +2,18 @@ import discord
 import asyncio
 from discord.ext import commands
 from funs import assignation, date
+from Reverse import reverseClient
 
+reverseClient = reverseClient()
 
 class Event():
     def __init__(self, bot, *args, **kwargs):
         self.bot = bot
         self.bg_task = self.bot.loop.create_task(self.autoroll())
+
+    async def on_member_join(member):
+        await reverseClient.registerMember([member])
+
 
     #Group Rotation (Tuesday & Wednesday)
     async def autoroll(self):
