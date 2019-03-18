@@ -39,9 +39,10 @@ async def on_ready():
     print("[*] I'm in, {}".format(config.get('join_message')))
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
     print('Launched at {} on {}'.format(date.WhatHourIsIt()," ".join(date.getDateInList())))
+
     #Register every new servers and members
     await reverseClient.registerServers(bot.servers)
-    await reverseClient.registerMember(bot.get_all_members);
+    #await reverseClient.registerMember(bot.get_all_members);
     await bot.change_presence(game=discord.Game(name=config.get('playing')))    
 
 #Load & Unlod commands

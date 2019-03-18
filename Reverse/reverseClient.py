@@ -23,9 +23,12 @@ class reverseClient:
             value = Server(cs.id, cs.name, cs.region, cs.icon, cs.large, cs.unavailable, cs.created_at, cs.member_count, cs.splash_url, cs.icon_url)
             await self.api.post('servers', json=value.__dict__())
 
-    def registerMember(self, user):
-        member = Member(user.id, user.name, user.mention, user.created_at, user.avatar_url)
-        return self.api.post('users', json=member.__dict__())
+    async def registerMember(self, users):
+         for cs in users:
+            if not cs.id:
+                cs.id = 0
+            member = Member(cs.id, cs.name, cs.mention, cs.created_at, cs.avatar_url)
+            await self.api.post('users', json=member.__dict__())
 
     def getValidValue(value):
         typeValue = type(value)
