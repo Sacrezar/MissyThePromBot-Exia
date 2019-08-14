@@ -1,0 +1,1 @@
+# TODO Initialisation when the bot join a new serv

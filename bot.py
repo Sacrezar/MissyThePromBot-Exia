@@ -1,20 +1,19 @@
 import os
 import inspect
-
-from funs import date
-import json
+from random import randint
 import discord
 from discord.ext import commands
 
-#Opening json file 
-with open('config.json') as f:
-    config = json.load(f)
+from funs import date
+from database import connexion
+
+#login
+coDic = connexion.login()
 
 #Bot setup
-bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))
+bot = commands.Bot(description=coDic.get('desc'), command_prefix=coDic.get('prefix'))
 bot.remove_command('help')
-owner = config.get('owners')
-
+owner = coDic.get('owner')
 
 exts = []
 #reading file and adding them to exts if they end by ".py"
@@ -30,11 +29,15 @@ print()
 #Online event
 @bot.event
 async def on_ready(): 
+
     print("\n")
-    print("[*] I'm in, {}".format(config.get('join_message')))
+    print("[*] I'm in, {}".format(coDic.get('join_message')))
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
-    print('Launched at {} on {}'.format(date.WhatHourIsIt()," ".join(date.getDateInList())))
-    await bot.change_presence(game=discord.Game(name=config.get('playing')))    
+    print('Launched at {} on {}'.format(date.WhatHourIsIt(),date.getDate()))
+
+    ng = coDic.get('playing')[randint(0,len(coDic.get('playing'))-1)]
+
+    await bot.change_presence(game=discord.Game(name=ng))    
 
 #Load & Unlod commands
 @bot.command(pass_context=True)
@@ -68,4 +71,4 @@ if __name__ == '__main__':
             print('{} cannot be loaded. [{}]'.format(extension, e))
 
 #connect the bot
-bot.run(config.get('token'))
+bot.run(coDic.get('token'))

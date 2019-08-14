@@ -4,7 +4,7 @@ from datetime import datetime
 from calendar import monthrange
 
 
-def getDateInList(flag=None,day=None, month=None, year=None):
+def getDate(flag=0,day=None, month=None, year=None):
     
     Mydict = {
         'Monday'   :  'Lundi',
