@@ -5,10 +5,43 @@ import time
 from discord.ext import commands
 from funs import assignation, date
 from database import query as q
+from database import db_init as dbin
 
 class Admin:
     def __init__(self, bot):
         self.bot = bot
+
+    @commands.command(pass_context=True)
+    async def init(self, ctx):
+        lsdic = {
+            "name": ctx.message.server.name,
+            "discord" : ctx.message.server.id
+        }
+
+        lgdic = []
+        for role in ctx.message.server.roles:
+            gdic = {
+            "name": role.name,
+            "discord" : role.id
+            }
+            lgdic.append(gdic)
+
+        lmdic = []
+        for member in self.bot.get_all_members():
+            member_role = []
+            for role in member.roles:
+                member_role.append(role.id)
+            mdic = {
+                "name": member.display_name,
+                "discord": member.id,
+                "groups": member_role,
+                "admin": member.server_permissions.administrator,
+            }
+            lmdic.append(mdic)
+
+
+        dbin.init(lsdic, lgdic, lmdic)
+
 
     # @commands.command(pass_context=True)
     # async def dtroll(self, ctx):
