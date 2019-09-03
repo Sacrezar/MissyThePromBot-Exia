@@ -3,7 +3,7 @@ import discord
 from datetime import datetime
 from calendar import monthrange
 
-
+# accept day, month and year values as number
 def getDate(flag=0,day=None, month=None, year=None):
     
     Mydict = {
