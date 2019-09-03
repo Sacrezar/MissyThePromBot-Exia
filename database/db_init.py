@@ -7,6 +7,8 @@ def update():
 
 def init(sdic, gdic, mdic):
 
+    # TODO - Verif if data is already registered.
+
     g = c()["Groups"]
     s = c()["Servers"]
     m = c()["Members"]

@@ -10,37 +10,47 @@ from database import db_init as dbin
 class Admin:
     def __init__(self, bot):
         self.bot = bot
-
+    
     @commands.command(pass_context=True)
     async def init(self, ctx):
-        lsdic = {
-            "name": ctx.message.server.name,
-            "discord" : ctx.message.server.id
-        }
-
-        lgdic = []
-        for role in ctx.message.server.roles:
-            gdic = {
-            "name": role.name,
-            "discord" : role.id
+        if ctx.message.author.server_permissions.administrator:
+            lsdic = {
+                "name": ctx.message.server.name,
+                "discord" : ctx.message.server.id
             }
-            lgdic.append(gdic)
 
-        lmdic = []
-        for member in self.bot.get_all_members():
-            member_role = []
-            for role in member.roles:
-                member_role.append(role.id)
-            mdic = {
-                "name": member.display_name,
-                "discord": member.id,
-                "groups": member_role,
-                "admin": member.server_permissions.administrator,
-            }
-            lmdic.append(mdic)
+            lgdic = []
+            for role in ctx.message.server.roles:
+                gdic = {
+                "name": role.name,
+                "discord" : role.id
+                }
+                lgdic.append(gdic)
 
+            lmdic = []
+            for member in self.bot.get_all_members():
+                member_role = []
+                for role in member.roles:
+                    member_role.append(role.id)
+                mdic = {
+                    "name": member.display_name,
+                    "discord": member.id,
+                    "groups": member_role,
+                    "admin": member.server_permissions.administrator,
+                }
+                lmdic.append(mdic)
 
-        dbin.init(lsdic, lgdic, lmdic)
+                # dbin.init(lsdic, lgdic, lmdic)
+        else:
+            channel = ctx.message.channel
+            messages = []
+
+            await self.bot.send_message(channel,"`\nYou're not allowed to\n`")
+
+            async for message in self.bot.logs_from(channel, 2):
+                messages.append(message)
+            await self.bot.delete_messages(messages)   
+            
 
 
     # @commands.command(pass_context=True)
@@ -72,7 +82,7 @@ class Admin:
 
             async for message in self.bot.logs_from(channel, 2):
                 messages.append(message)
-            await self.bot.delete_messages(messages)
+            await self.bot.delete_messages(messages)   
 
 
 def setup(bot):

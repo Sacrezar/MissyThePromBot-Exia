@@ -10,13 +10,12 @@ class Event():
         self.bg_task = self.bot.loop.create_task(self.autoroll())
         self.bg_task = self.bot.loop.create_task(self.groups_update())
 
-    #Group Rotation (Tuesday & Wednesday)
     async def autoroll(self):
         await self.bot.wait_until_ready()
         print("Tomorrow is {}".format(date.getDate(1)))
         while True:
             # if date+1 == one date in toRoll["dates"] and toRoll["flag"] == 1
-            await asyncio.sleep(86400)
+            await asyncio.sleep(86400A
     
     async def groups_update(self):
         await self.bot.wait_until_ready()
