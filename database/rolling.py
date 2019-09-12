@@ -6,13 +6,16 @@ from connexion import co_to_DB as c
 def create_roll(name, server, mode, roles, channel, participants, dates):
     myRoll = c()["Rolling"]
 
+    # Determine id value
     try:
         id = myRoll.find().sort("id",-1)[0]["id"]+1
     except Exception as e: 
         print("Error : [{}]".format(e))
         id = 0
 
+    # verify redundancy 
     if not myRoll.find_one({"server": server, "name" : name}):
+
         roll = {
             "id":id,
             "name":name,
@@ -56,12 +59,13 @@ def add_date(name, server, dates):
 def remove_date(id=None, name=None, server=None, dates=None):
     myRoll = c()["Rolling"]
 
+    # retrieve rolling with id
     if id is not None:
         query = {"id":id}
-        print(id)
+    # retrieve rolling with server and name
     else:
         query = {"server": server, "name" : name}
-        print(id)
+
     pullvalue = {"$pull": {"dates": {"$in": dates }}}
 
     myRoll.update(query, pullvalue)
@@ -78,6 +82,7 @@ def add_to_history(date, rolling, role_distrib):
 
     myHist.insert_one(history)
 
+    # Remove date from rolling.dates
     remove_date(id=rolling, dates=date)
 
     return 0
