@@ -6,12 +6,17 @@ import json
 import discord
 from discord.ext import commands
 
-#Opening json file 
-with open('config.json') as f:
-    config = json.load(f)
+from Reverse import reverseClient
+
+#Opening env file 
+with open('.env.json') as f:
+    env = json.load(f)
+with open(env.get('config')) as e:
+    config = json.load(e)
 
 #Bot setup
 bot = commands.Bot(description=config.get('desc'), command_prefix=config.get('prefix'))
+reverseClient = reverseClient()
 bot.remove_command('help')
 owner = config.get('owners')
 
@@ -34,6 +39,10 @@ async def on_ready():
     print("[*] I'm in, {}".format(config.get('join_message')))
     print('[*] Name: {}, Owner: {}'.format(bot.user.name,owner))
     print('Launched at {} on {}'.format(date.WhatHourIsIt()," ".join(date.getDateInList())))
+
+    #Register every new servers and members
+    await reverseClient.registerServers(bot.servers)
+    #await reverseClient.registerMember(bot.get_all_members);
     await bot.change_presence(game=discord.Game(name=config.get('playing')))    
 
 #Load & Unlod commands
