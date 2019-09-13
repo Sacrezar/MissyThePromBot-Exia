@@ -21,8 +21,4 @@ def is_he_admin(discord_id_serv, discord_id_m):
         return "You have to init the server" 
 
 
-def new_assigned_group(discord_id_serv, discord_id_m, discord_id_g):
-    print("yolo")
-
-
 

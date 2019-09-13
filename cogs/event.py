@@ -15,15 +15,11 @@ class Event():
         print("Tomorrow is {}".format(date.getDate(1)))
         while True:
             # if date+1 == one date in toRoll["dates"] and toRoll["flag"] == 1
-            await asyncio.sleep(86400A
+            await asyncio.sleep(86400)
     
     async def groups_update(self):
         await self.bot.wait_until_ready()
         while True:
-            id_serv = 1
-            id_m = 1
-            list_id_g = 1
-            q.new_assigned_group(id_serv, id_m, list_id_g)
             await asyncio.sleep(10)
 
 def setup(bot):
