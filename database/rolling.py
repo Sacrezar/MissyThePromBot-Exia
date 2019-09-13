@@ -46,9 +46,8 @@ def update_channel(name, server, channel):
 def add_date(name, server, dates):
     myRoll = c()["Rolling"]
 
-    for date in dates:
-        if date in myRoll.find_one({"server": server, "name" : name})["dates"]:
-            dates.remove(date)
+    # remove duplicate with database from list before adding them to database 
+    dates = [x for x in dates if x not in myRoll.find_one({"server": server, "name" : name})["dates"]]
 
     query = {"server": server, "name" : name}
     pushvalue = {"$push": {"dates": {"$each": dates }}}
