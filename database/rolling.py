@@ -1,11 +1,15 @@
 from pymongo import MongoClient
-# from database.connexion import co_to_DB as c
-from connexion import co_to_DB as c
+from database.connexion import co_to_DB as c
+# from connexion import co_to_DB as c
 
 
-def create_roll(name, server, mode, roles, channel, participants, dates):
+def create_roll(name, discord_id_serv, mode, roles, channel, participants, dates):
     myRoll = c()["Rolling"]
+    myserv = c()["Servers"]
 
+    query_to_serv = { "discord": discord_id_serv}
+    server = myserv.find_one(query_to_serv)
+    
     # Determine id value
     try:
         id = myRoll.find().sort("id",-1)[0]["id"]+1
@@ -19,7 +23,7 @@ def create_roll(name, server, mode, roles, channel, participants, dates):
         roll = {
             "id":id,
             "name":name,
-            "server":server,
+            "server":server["id"],
             "mode":mode,
             "roles": roles,
             "channels": channel,

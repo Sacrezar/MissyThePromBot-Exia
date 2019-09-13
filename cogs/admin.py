@@ -6,6 +6,7 @@ from discord.ext import commands
 from funs import assignation, date
 from database import query as q
 from database import db_init as dbin
+from database import rolling
 
 class Admin:
     def __init__(self, bot):
@@ -51,7 +52,49 @@ class Admin:
                 messages.append(message)
             await self.bot.delete_messages(messages)   
             
+    @commands.command(pass_context=True)
+    async def croll(self, ctx):
+        if q.is_he_admin(ctx.message.server.id,ctx.message.author.id):
+            server = ctx.message.server.id
+            message = ctx.message.content.split(" ")
+            channel = ctx.message.channel
+            to_remove = ['"', '<','>','@', '!', '&', '#']
+            dates = []
+            roles = []
 
+            for x in message:
+                x = [y for y in x if y not in to_remove]
+                x = ''.join(x)
+
+                y = "".join(x[:2].split())
+                z = "".join(x[2:].split())
+
+                # name
+                if y == "-n":
+                    name = z
+                # mode
+                elif y == "-m":
+                    mode = z
+                # roles
+                elif y == "-r":
+                    roles.extend(z.split(","))
+                # channel
+                elif y == "-c":
+                    channel = z
+                # participants
+                elif y == "-p":
+                    participants = z
+                # dates
+                elif y == "-d": 
+                    dates.extend(z.split(","))
+                else:
+                    if " ".join(x.split()).lower() != "croll":
+                        print("{} cant be used".format(x))
+                        
+            if not roles: 
+                await self.bot.send_message(channel,"`No selected roles`")
+            else:
+                print(rolling.create_roll(name, server, mode, roles, channel, participants, dates))
 
     # @commands.command(pass_context=True)
     # async def dtroll(self, ctx):
