@@ -9,7 +9,7 @@ def create_roll(name, discord_id_serv, mode, roles, channel, participants, dates
 
     query_to_serv = { "discord": discord_id_serv}
     server = myserv.find_one(query_to_serv)
-    
+
     # Determine id value
     try:
         id = myRoll.find().sort("id",-1)[0]["id"]+1
@@ -26,7 +26,7 @@ def create_roll(name, discord_id_serv, mode, roles, channel, participants, dates
             "server":server["id"],
             "mode":mode,
             "roles": roles,
-            "channels": channel,
+            "channel": channel,
             "participants": participants,
             "dates": dates
         }
@@ -76,6 +76,7 @@ def remove_date(id=None, name=None, server=None, dates=None):
 
 def add_to_history(date, rolling, role_distrib):
     myHist = c()["History"]
+    date_to_remove = []
 
     history = {
         "date": date,
@@ -84,8 +85,9 @@ def add_to_history(date, rolling, role_distrib):
     }
 
     myHist.insert_one(history)
+    date_to_remove.append(date)
 
     # Remove date from rolling.dates
-    remove_date(id=rolling, dates=date)
+    remove_date(id=rolling, dates=date_to_remove)
 
     return 0
