@@ -17,7 +17,7 @@ def init(sdic, gdic, mdic):
     try:
         id_g = g.find().sort("id",-1)[0]["id"]+1
     except Exception as e: 
-        print("Error : [{}]".format(e))
+        print("[Groups] Error : [{}]".format(e))
         id_g = 0
 
     groups_list = []
@@ -35,14 +35,14 @@ def init(sdic, gdic, mdic):
     try:
         id_s = s.find().sort("id",-1)[0]["id"]+1
     except Exception as e: 
-        print("Error : [{}]".format(e))
+        print("[Server] Error : [{}]".format(e))
         id_s = 0
 
     # members
     try:
         id_m = m.find().sort("id",-1)[0]["id"]
     except Exception as e: 
-        print("Error : [{}]".format(e))
+        print("[Members] Error : [{}]".format(e))
         id_m = 0
 
     id_s = 0
