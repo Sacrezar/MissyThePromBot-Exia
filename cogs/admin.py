@@ -41,7 +41,7 @@ class Admin:
                 }
                 lmdic.append(mdic)
 
-                # dbin.init(lsdic, lgdic, lmdic)
+            dbin.init(lsdic, lgdic, lmdic)
         else:
             channel = ctx.message.channel
             messages = []
@@ -50,14 +50,14 @@ class Admin:
 
             async for message in self.bot.logs_from(channel, 2):
                 messages.append(message)
-            await self.bot.delete_messages(messages)   
-            
+            await self.bot.delete_messages(messages) 
+
     @commands.command(pass_context=True)
     async def croll(self, ctx):
         if q.is_he_admin(ctx.message.server.id,ctx.message.author.id):
             server = ctx.message.server.id
             message = ctx.message.content.split(" ")
-            channel = ctx.message.channel
+            channel = ctx.message.channel.id
             to_remove = ['"', '<','>','@', '!', '&', '#']
             dates = []
             roles = []
@@ -94,6 +94,7 @@ class Admin:
             if not roles: 
                 await self.bot.send_message(channel,"`No selected roles`")
             else:
+                print(f"name: {name},\nserver: {server},\nmode: {mode},\nroles: {roles},\nchannel: {channel},\nparticipants: {participants},\ndates: {dates}")
                 print(rolling.create_roll(name, server, mode, roles, channel, participants, dates))
 
     # @commands.command(pass_context=True)
