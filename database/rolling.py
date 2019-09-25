@@ -1,3 +1,5 @@
+import time
+
 from pymongo import MongoClient
 from database.connexion import co_to_DB as c
 # from connexion import co_to_DB as c
@@ -79,6 +81,7 @@ def add_to_history(date, rolling, role_distrib):
     date_to_remove = []
 
     history = {
+        "timestamp": int(time.time()),
         "date": date,
         "rolling": rolling,
         "role_distrib": role_distrib
