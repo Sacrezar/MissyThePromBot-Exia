@@ -3,6 +3,8 @@ import asyncio
 from discord.ext import commands
 from funs import assignation, date
 from database import query as q
+from database import rolling as r
+
 
 class Event():
     def __init__(self, bot, *args, **kwargs):
@@ -16,7 +18,7 @@ class Event():
         while True:
             for x in range(q.how_many_servers()):
                 #retrieve data
-                data = q.roll_on_date(x,date.getDate(1))
+                data = q.roll_on_date(x,"Dimanche 22 Septembre 2019")
 
                 for roll in data:
                     if roll["mode"] == "Group":
@@ -32,16 +34,20 @@ class Event():
                         for member in members:
                             member_dic[member["id"]] = member["name"]
 
-                        assignation.assignation_roles_random(list(member_dic.keys), len(list(member_dic.keys)), roles)
+                        id_list = list(member_dic.keys()) 
+                        print("roles are: ",roles)
 
+                    history = q.get_history(id, roles, len(id_list))
+                    chosen_ones = assignation.assignation_roles_random(id_list, history)
                     # prepare to send message
                     embed = discord.Embed(colour=discord.Colour.dark_gold())
                     embed.set_author(name = date.getDate(1))
-                    for x in roles:
-                        embed.add_field(name = x, value = x, inline=False)
+                    for role in range(len(roles)):
+                        embed.add_field(name = roles[role], value = member_dic.get(chosen_ones[role]), inline=False)
                     # send message
                     await self.bot.send_message(destination=discord.Object(id=channel),content = participants, embed=embed)
                     embed.clear_fields()
+                    r.add_to_history("Dimanche 22 Septembre 2019", id, chosen_ones)
 
             await asyncio.sleep(86400)
     
