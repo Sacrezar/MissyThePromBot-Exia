@@ -1,6 +1,6 @@
 from pymongo import MongoClient
-# from database.connexion import co_to_DB as c
-from connexion import co_to_DB as c
+from database.connexion import co_to_DB as c
+# from connexion import co_to_DB as c
 
 # how_many_servers
 def how_many_servers():
@@ -41,24 +41,18 @@ def whos_in_group(group_discord):
     query_to_members = { "groups_id": id }
     return mymembers.find(query_to_members)
 
+def get_history(roll_id, roles, length):
+    myHist = c()["History"]
+    number = length-len(roles)
 
-data = roll_on_date(0,"Dimanche 22 Septembre 2019")
-for x in data:
-    if x["mode"] == "Group":
-        id = x["id"]
-        name = x["name"]
-        participants = "<@&" + x["participants"] + ">"
-        roles = x["roles"]
-        channel = x["channel"]
-        print(f"{id} - {channel} - {name} - {participants} - {roles}")
+    dic = {}
 
-        datagain = whos_in_group(x["participants"])
-        mydic = {}
-        for y in datagain:
-            idd=y["id"]
-            namee = y["name"]
-            print(f"{idd} : {namee}")
-            mydic[y["id"]] = y["name"]
-            liste = list(mydic.keys())
-        print(liste)
-        print(mydic.get(1))
+    for x in range(len(roles)):
+        liste = []
+        for y in myHist.find({"rolling": roll_id}).sort("timestamp",-1).limit(number):
+            liste.append(y["role_distrib"][x])
+        dic[roles[x]] = liste
+
+    print(dic)
+    return dic
+   
