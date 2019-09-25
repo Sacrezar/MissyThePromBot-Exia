@@ -2,9 +2,11 @@ from pymongo import MongoClient
 # from database.connexion import co_to_DB as c
 from connexion import co_to_DB as c
 
+# how_many_servers
 def how_many_servers():
     return c()["Servers"].count()
 
+# is_he_admin
 def is_he_admin(discord_id_serv, discord_id_m):
     myserv = c()["Servers"]
     mymembers = c()["Members"]
@@ -22,12 +24,14 @@ def is_he_admin(discord_id_serv, discord_id_m):
         print("Error : [{}]".format(e))
         return "You have to init the server" 
 
+# roll_on_date
 def roll_on_date(discord_id_serv, date):
     myroll = c()["Rolling"]
     
     query = { "dates": date}
     return myroll.find(query)
 
+# whos_in_group
 def whos_in_group(group_discord):
     mygroup = c()["Groups"]
     mymembers = c()["Members"]
