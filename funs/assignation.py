@@ -34,22 +34,33 @@ logger.info("Roles disponibles : {}".format(role))
 #File [GLOBAL][INFO]
 filePath = "temp/alreadyPick.txt"
 
-#Assignation_roles_random(choix, i, nbPersonnes)
-    #Choix  -> Prasit(1) ou 0
-    #i      -> Numéro de groupe
-    #nbPersonnes -> Nombre de personne(Len())
-    #Role disponible : variable role [global] par default
-def assignation_roles_random(people, nbpeople, roles, history):
-    print(people)
-    print(nbpeople)
-    print(roles)
-    print(history)
+#Assignation_roles_random(people, history)
+def assignation_roles_random(people, history):
+    print(f"List: {people}")
+    print()
+    
+
+    newRoles = {}
+
+    for role in history.keys():
+        print(f"{role}: {history[role]}")
+        loop = True
+        while loop == True:
+            roll =random.randint(0,len(people)-1)
+            if people[roll] not in history[role] and people[roll] not in newRoles:
+                newRoles[role] = people[roll]
+                loop = False
+    print("------")
+    print(f"New roles: {newRoles}")
+    return newRoles
+
 
 dic = {
     "Animateur": [4,1,6,10,0,5,11,7],
     "Secrétaire": [3,9,2,4,8,11,0,5],
     "Scribe": [5,6,10,11,2,4,1,8],
-    "Gestionaire": [9,2,1,3,4,6,5,0]      
+    "Gestionnaire": [9,2,1,3,4,6,5,0]      
     }
 
-assignation_roles_random([0, 4, 5, 7, 10, 15, 16, 22, 23, 25, 28, 32], 12, ['Animateur', 'Secrétaire', 'Scribe', 'Gestionnaire'], dic)
+
+assignation_roles_random([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], dic)
