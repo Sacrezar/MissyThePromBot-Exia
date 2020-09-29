@@ -1,4 +1,4 @@
-# Deprecated, see [The Reverse](https://github.com/AlphaCodeCorp/The-Reverse) on AlphaCode. 
+# DEPRECATED: see [The Reverse](https://github.com/AlphaCodeCorp/The-Reverse) on AlphaCode. 
 
 # MissyThePromBot-Exia
 
