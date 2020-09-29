@@ -1,3 +1,5 @@
+# Deprecated, see [The Reverse](https://github.com/AlphaCodeCorp/The-Reverse) on AlphaCode. 
+
 # MissyThePromBot-Exia
 
 Missy is a bot allowing to choose the roles of the members of each group randomly among "Leader", "Scrib", "Secretary", "Time Keeper"
